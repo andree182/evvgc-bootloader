@@ -33,18 +33,25 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#include "common.h"
-
 #define LED_BANK GPIOA
+#define LED_RCC_APB2ENR_GPIO RCC_APB2ENR_GPIOA
 #define LED      3
+
 #define LED2_BANK GPIOB
+#define LED2_RCC_APB2ENR_GPIO RCC_APB2ENR_GPIOB
 #define LED2      12
+
+#define BUTTON_BANK GPIOC
+#define BUTTON_RCC_APB2ENR_GPIO RCC_APB2ENR_GPIOC
+#define BUTTON      9
+
+#define USB_DISC_BANK GPIOA
+#define USB_DISC_RCC_APB2ENR_GPIO RCC_APB2ENR_GPIOA
+#define USB_DISC      15
+
 #define BLINK_FASTEST 0x20000
 #define BLINK_FAST 0x50000
 #define BLINK_SLOW 0x100000
-
-#define BUTTON_BANK GPIOC
-#define BUTTON      9
 
 #define STARTUP_BLINKS 5
 #define BOOTLOADER_WAIT 6
