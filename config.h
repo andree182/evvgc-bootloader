@@ -36,7 +36,10 @@
 #include "common.h"
 
 #define LED_BANK GPIOA
-#define LED      5
+#define LED      3
+#define LED2_BANK GPIOB
+#define LED2      12
+#define BLINK_FASTEST 0x20000
 #define BLINK_FAST 0x50000
 #define BLINK_SLOW 0x100000
 
@@ -48,7 +51,7 @@
 
 #define USER_CODE_RAM     ((u32)0x20000C00)
 #define RAM_END           ((u32)0x20005000)
-#define USER_CODE_FLASH   ((u32)0x08005000)
+#define USER_CODE_FLASH   ((u32)0x08004000)
 #define FLASH_END         ((u32)0x08020000)
 
 #define VEND_ID0 0xAF
