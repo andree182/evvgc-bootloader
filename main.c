@@ -33,18 +33,32 @@
 
 #include "common.h"
 
+static void strobeBootup(int count)
+{
+    int i, j;
+
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < count; j++) {
+            strobePin(LED2_BANK, LED2, 1, BLINK_SLOW);
+        }
+        strobePin(LED_BANK, LED, 1, BLINK_SLOW);
+    }
+}
+
 int main() {
     systemReset(); // peripherals but not PC
     setupCLK();
     setupLED();
+    setupLED2();
     setupUSB();
     setupBUTTON();
     setupFLASH();
 
+    strobePin(LED2_BANK, LED2, 1, BLINK_FAST);
     strobePin(LED_BANK, LED, STARTUP_BLINKS, BLINK_FAST);
 
     /* wait for host to upload program or halt bootloader */
-    bool no_user_jump = !checkUserCode(USER_CODE_FLASH) && !checkUserCode(USER_CODE_RAM) || readPin(BUTTON_BANK, BUTTON);
+    bool no_user_jump = !checkUserCode(USER_CODE_FLASH) && !checkUserCode(USER_CODE_RAM)/* || readPin(BUTTON_BANK, BUTTON)*/;
     int delay_count = 0;
 
     while ((delay_count++ < BOOTLOADER_WAIT)
@@ -58,8 +72,10 @@ int main() {
     }
 
     if (checkUserCode(USER_CODE_RAM)) {
+        strobeBootup(1);
         jumpToUser(USER_CODE_RAM);
     } else if (checkUserCode(USER_CODE_FLASH)) {
+        strobeBootup(2);
         jumpToUser(USER_CODE_FLASH);
     } else {
         // some sort of fault occurred, hard reset

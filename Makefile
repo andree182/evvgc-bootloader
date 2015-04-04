@@ -17,7 +17,7 @@ ST_LIB = stm32_lib
 ST_USB = usb_lib
 
 # Optimization level [0,1,2,3,s]
-OPT ?= 0
+OPT ?= s
 DEBUG = 
 #DEBUG = dwarf-2
 

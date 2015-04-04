@@ -120,6 +120,31 @@ void setupLED(void) {
     setPin(LED_BANK, LED);
 }
 
+void setupLED2(void) {
+    u32 rwmVal; /* read-write-modify place holder var */
+
+    /* Setup APB2 for LED2 GPIO bank */
+    rwmVal =  GET_REG(RCC_APB2ENR);
+    rwmVal |= LED2_RCC_APB2ENR_GPIO;
+    SET_REG(RCC_APB2ENR, rwmVal);
+
+#if (LED2 < 8)
+# define LED2_GPIO_CR GPIO_CRL(LED2_BANK)
+# define LED2_CR_PORT (LED2)
+#else
+# define LED2_GPIO_CR GPIO_CRH(LED2_BANK)
+# define LED2_CR_PORT (LED2 - 8)
+#endif
+
+    /* Setup GPIO Pin as PP Out */
+    rwmVal =  GET_REG(LED2_GPIO_CR);
+    rwmVal &= ~(0xF << (LED2_CR_PORT * 4));
+    rwmVal |= (0x1 << (LED2_CR_PORT * 4));
+    SET_REG(LED2_GPIO_CR, rwmVal);
+
+    setPin(LED2_BANK, LED2);
+}
+
 void setupBUTTON(void) {
     u32 rwmVal; /* read-write-modify place holder var */
 
