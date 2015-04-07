@@ -8,13 +8,22 @@ code was closed - hence this second spin-off.
 
 # Usage
 
-1) make
-2) flash to evvgc via uart1:
-   make program_serial
-3) build target system to be linked from 0x8004000
-4) flash the target system using dfu_util:
-   dfu-util --alt 1  --download $(PATH).bin -R
+1. make
+2. flash bootloader to evvgc via uart1 (*LiPo power off!*):
 
+    make program_serial
+3. build target system to be linked from 0x8004000. For evvgc-plus, this is done by:
+
+    make USE_USB_BL=yes
+4. (remove BOOT1 pin and) reboot board
+5. flash the target system using dfu_util (remember - you only have ~2s after powerup to flash, if there is some valid firmware flashed already):
+
+    dfu-util --alt 1  --download $(IMAGE_PATH).bin -R
+6. blue led (on newer boards) blinks once at boot, then multiple times if image is booted. No blue blinks == bad.
+
+# TODO
+* allow reboot to bootloader (some USB magic needs to be added for the host to correctly reset and detect change)
+* allow forcing staying in bootloader mode even if there is a valid firwmare (for convenient re-flashing)
 
 # Maple bootloader info
 ## Code structure
@@ -49,5 +58,5 @@ dfu.c
 
 ## TODO
 
- * pack the structs
- * use sizeof() for usb application descriptor once structs are packed
+* pack the structs
+* use sizeof() for usb application descriptor once structs are packed
