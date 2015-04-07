@@ -1,5 +1,23 @@
+# Introduction
 
-FILES -------------------------------------------------------------------------
+This is a small fork of the original bootloader from maple, which is further based
+on the stm32 bootloader ideas... Quite a journey.
+
+The original evvgc usb bootloader didn't seem to work with evvgc-plus, and the
+code was closed - hence this second spin-off.
+
+# Usage
+
+1) make
+2) flash to evvgc via uart1:
+   make program_serial
+3) build target system to be linked from 0x8004000
+4) flash the target system using dfu_util:
+   dfu-util --alt 1  --download $(PATH).bin -R
+
+
+# Maple bootloader info
+## Code structure
 
 stm32lib/*
   - all the (possibly consolidated) stm32 lib and usb example code
@@ -29,7 +47,7 @@ hardware.c
 dfu.c
   - mostly the giant FSM case switch, also some USB endpoint callbacks
 
-TODO --------------------------------------------------------------------------
+## TODO
 
  * pack the structs
  * use sizeof() for usb application descriptor once structs are packed
