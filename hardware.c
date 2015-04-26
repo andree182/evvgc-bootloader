@@ -190,6 +190,19 @@ bool checkUserCode(u32 usrAddr) {
     }
 }
 
+bool checkNobootFlag(u32 flagAddr)
+{
+    u32 *fv = (u32*)flagAddr;
+
+    if (*fv == NOBOOT_FLAG) {
+        /* Reset to not stay in boot-loop forever (SRAM) */
+        *fv = 0;
+        return (TRUE);
+    } else {
+        return (FALSE);
+    }
+}
+
 void jumpToUser(u32 usrAddr) {
     typedef void (*funcPtr)(void);
 

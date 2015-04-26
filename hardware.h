@@ -178,9 +178,11 @@ void systemHardReset(void);
 void systemReset(void);
 void setupCLK(void);
 void setupLED(void);
+void setupLED2(void);
 void setupFLASH(void);
 void setupBUTTON(void);
 bool checkUserCode(u32 usrAddr);
+bool checkNobootFlag(u32 flagAddr);
 void jumpToUser(u32 usrAddr);
 
 bool flashWriteWord(u32 addr, u32 word);
